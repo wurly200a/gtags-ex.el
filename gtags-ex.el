@@ -89,7 +89,9 @@
 (defun gtags-ex-update ()
   "global update"
   (interactive)
-  (setq gtags-ex-command-str "global.exe")
+  (if (featurep 'w32)
+      (setq gtags-ex-command-str "global.exe")
+    (setq gtags-ex-command-str "global"))
   (setq gtags-ex-command-opt-str "-uv")
   (setq gtags-ex-pop-to-buffer-mode t)
   (gtags-ex-command-async)
@@ -104,7 +106,9 @@
           (string-match ".+\.cpp$" gtags-ex-target-file-name)
           (string-match ".+\.hpp$" gtags-ex-target-file-name) )
       (progn
-        (setq gtags-ex-command-str "global.exe")
+        (if (featurep 'w32)
+            (setq gtags-ex-command-str "global.exe")
+          (setq gtags-ex-command-str "global"))
         (setq gtags-ex-command-opt-str "-uv")
         (setq gtags-ex-pop-to-buffer-mode nil)
         (gtags-ex-command-async)
